@@ -1,0 +1,3 @@
+- B1: Clone code về htdocs (nếu dùng xampp) hoặc trỏ domain về thư mục vừa clone (ampps)
+- B2: Chạy lệnh: composer update
+- B3: Mở localhost file index.php
