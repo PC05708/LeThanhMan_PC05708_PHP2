@@ -16,6 +16,5 @@
         <label for="pass-confirm" class="form-label">Xác nhận mật khẩu: </label>
         <input type="password" name="pass-confirm" class="form-control" id="pass-confirm" placeholder="xác nhận mật khẩu">
     </div>
-
     <button name="add" class="btn btn-primary">Thêm người dùng</button>
 </form>

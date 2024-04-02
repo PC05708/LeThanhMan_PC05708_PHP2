@@ -21,7 +21,6 @@
                     <th scope="row"><?= $i++ ?? "" ?></th>
                     <td><?= $user['name'] ?? "" ?></td>
                     <td><?= $user['email'] ?? "" ?></td>
-                    <?= $user['id'] ?>
                     <td>
                         <a href="?url=UserController/update&id=<?= $user['id'] ?? "" ?>" class="btn btn-primary"> Sửa </a>
                         <a href="?url=UserController/delete&id=<?= $user['id'] ?? "" ?>" class="btn btn-danger"> Xóa </a>

@@ -9,12 +9,6 @@ class HomeController extends BaseController
 {
 
     private $_renderBase;
-
-    /**
-     * Thuốc trị đau lưng
-     * Copy lại là hết đau lưng
-     * 
-     */
     function __construct()
     {
         parent::__construct();
@@ -28,26 +22,13 @@ class HomeController extends BaseController
 
     function homePage()
     {
-        // dữ liệu ở đây lấy từ repositories hoặc model
-        $data = [
-            "products" => [
-                [
-                    "id" => 1,
-                    "name" => "Sản phẩm"
-                ]
-            ]
-        ];
-
-
+        $data = [];
         $this->_renderBase->renderHeader();
-        // $this->load->render('layouts/client/slider');
-        $this->load->render('layouts/product/index', $data);
+        $this->load->render('layouts/home', $data);
         $this->_renderBase->renderFooter();
     }
 
     function detail($id)
     {
-        // dữ liệu ở đây lấy từ repositories hoặc model
-
     }
 }

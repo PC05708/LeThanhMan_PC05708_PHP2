@@ -10,8 +10,6 @@ abstract class BaseModel implements CrudInterface
 {
 
     protected $table;
-
-
     private $_connection;
 
     private $_query;
@@ -66,6 +64,7 @@ abstract class BaseModel implements CrudInterface
         return $stmt->execute();
         // return $stmt;
     }
+
     public function update(int $id, array $data)
     {
         // $data=[

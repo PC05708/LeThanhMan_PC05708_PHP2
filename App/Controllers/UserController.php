@@ -12,11 +12,6 @@ class UserController extends BaseController
     private $_renderBase;
     private $_model;
 
-    /**
-     * Thuốc trị đau lưng
-     * Copy lại là hết đau lưng
-     * 
-     */
     function __construct()
     {
         parent::__construct();
@@ -30,7 +25,6 @@ class UserController extends BaseController
         // dữ liệu ở đây lấy từ repositories hoặc model     
         $data = $this->_model->getAllUser();
         $this->_renderBase->renderHeader();
-        // $this->load->render('layouts/client/slider');
         $this->load->render('layouts/user/index', $data);
         $this->_renderBase->renderFooter();
     }

@@ -12,11 +12,6 @@ class CategoryController extends BaseController
     private $_renderBase;
     private $_model;
 
-    /**
-     * Thuốc trị đau lưng
-     * Copy lại là hết đau lưng
-     * 
-     */
     function __construct()
     {
         parent::__construct();
@@ -28,37 +23,32 @@ class CategoryController extends BaseController
     function index()
     {
         // dữ liệu ở đây lấy từ repositories hoặc model     
-        $data = [];
-
+        $data = $this->_model->getAll();
         $this->_renderBase->renderHeader();
-        // $this->load->render('layouts/client/slider');
         $this->load->render('layouts/categories/index', $data);
-        $this->_renderBase->renderFooter();
-    }
-
-    function detail($id)
-    {
-        $data = [];
-        // dữ liệu ở đây lấy từ repositories hoặc model
-        $this->_renderBase->renderHeader();
-        // $this->load->render('layouts/client/slider');
-        $this->load->render('layouts/categories/detail', $data);
         $this->_renderBase->renderFooter();
     }
     function create()
     {
-
+        $data = [];
         if (isset($_POST['add'])) {
             $name = $_POST['name'];
-            var_dump($name);
             $data = [
                 "name" => $name
             ];
             $this->_model->create($data);
+            header("Location: ?url=UserController/index");
+            exit();
         }
         $this->_renderBase->renderHeader();
-        // $this->load->render('layouts/client/slider');
         $this->load->render('layouts/categories/create', $data);
+        $this->_renderBase->renderFooter();
+    }
+    function update()
+    {
+        $data = [];
+        $this->_renderBase->renderHeader();
+        $this->load->render('layouts/categories/update', $data);
         $this->_renderBase->renderFooter();
     }
 }
