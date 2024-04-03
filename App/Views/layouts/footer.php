@@ -2,8 +2,8 @@
 <footer class="p-3 bg-success mt-5">
     <p class="text-center m-0 text-light"><b>Lê Thanh Mẩn manltpc05708@fpt.edu.vn</b></p>
 </footer>
-<script src="<?= $ROOT_URL ?? "" ?>public/assets/js/ckeditor.js"></script>
-<script src="<?= $ROOT_URL ?? "" ?>public/assets/js/test.js"></script>
+<script src="<?= $ROOT_URL ?? "" ?>/public/assets/js/ckeditor.js"></script>
+<script src="<?= $ROOT_URL ?? "" ?>/public/assets/js/test.js"></script>
 
 <script>
     ClassicEditor

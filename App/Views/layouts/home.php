@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="accordion" id="accordionDate">
+            <div class="accordion mb-3" id="accordionDate">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingTwo">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -32,6 +32,23 @@
                         </button>
                     </h2>
                     <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionDate">
+                        <div class="accordion-body p-0">
+                            <ul class="m-0 p-0 list-unstyled">
+                                <li class="p-2 border-bottom"><a class="nav-link" href="">Tăng dần</a></li>
+                                <li class="p-2 "><a class="nav-link" href="">Giảm dần</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="accordionQuality">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseTwo">
+                            Sắp xếp theo số lượng
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionDate">
                         <div class="accordion-body p-0">
                             <ul class="m-0 p-0 list-unstyled">
                                 <li class="p-2 border-bottom"><a class="nav-link" href="">Tăng dần</a></li>
@@ -52,7 +69,6 @@
                         <tr>
                             <th scope="col">STT</th>
                             <th scope="col">Tên sản phẩm</th>
-                            <th scope="col">Ảnh</th>
                             <th scope="col">Loại</th>
                             <th scope="col">Giá</th>
                             <th></th>
@@ -64,7 +80,6 @@
                             <tr>
                                 <th scope="row"><?= $i++ ??  "" ?></th>
                                 <td><?= $product['name'] ?? "" ?></td>
-                                <td><?= $product['img'] ?? "" ?></td>
                                 <td><?= $product['category_name'] ?? "" ?></td>
                                 <td><?= number_format($product['price'], 0)  ?? "" ?> VNĐ</td>
                                 <td>
@@ -76,6 +91,25 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+            </div>
+            <div class="d-flex justify-content-center">
+                <nav aria-label="Page navigation  example ">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
