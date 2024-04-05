@@ -31,14 +31,18 @@ abstract class BaseModel implements CrudInterface
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function conditionalTake($column, $value)
+    {
+        $this->_query = "SELECT * FROM $this->table WHERE $column = :value";
+        $stmt = $this->_connection->PDO()->prepare($this->_query);
+        $stmt->execute(['value' => $value]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
     public function getOne(int $id)
     {
         $this->_query = "SELECT * FROM $this->table WHERE id=$id";
-
         $stmt   = $this->_connection->PdO()->prepare($this->_query);
-
-
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -67,45 +71,14 @@ abstract class BaseModel implements CrudInterface
 
     public function update(int $id, array $data)
     {
-        // $data=[
-        //     'name'=> $name,
-        //     'status'=> $status,
-        //     'description'=> $description
-        // ];
-
-        // $this->_query = "UPDATE $this->table SET name='$name',status='$status' WHERE id=$id";
-
-
-        // tạo câu truy vấn
         $this->_query = "UPDATE $this->table SET ";
         foreach ($data as $key => $value) {
             $this->_query .= "$key = '$value', ";
         }
         $this->_query = rtrim($this->_query, ", ");
-
         $this->_query .= " WHERE id=$id";
-
-        //    $sql .= " WHERE ";
-        //    foreach ($conditions as $key => $value) {
-        //        $sql .= "$key = :$key AND ";
-        //    }
-        //    $sql = rtrim($sql, "AND ");
-
-        // chuẩn bị câu truy vấn
         $stmt = $this->_connection->PdO()->prepare($this->_query);
-
-        // bind các giá trị
-        // foreach ($data as $key => $value) {
-        //     $stmt->bindValue(":$key", $value);
-        // }
-        //    foreach ($conditions as $key => $value) {
-        //        $stmt->bindValue(":$key", $value);
-        //    }
-
-        // return $stmt;
-        // thực hiện câu truy vấn
         return $stmt->execute();
-        // return $this->_query;
     }
     public function delete(int $id): bool
     {

@@ -6,7 +6,7 @@ class Route
 {
     public $url;
     public $nameController = "HomeController";
-    public $nameMethod = "home";
+    public $nameMethod = "homePage";
     public $path = 'App/Controllers/';
     public $controller;
     function __construct()
@@ -29,15 +29,38 @@ class Route
 
     function renderController()
     {
+        session_start();
+        if (empty($_SESSION['user']) && $this->url[0] != 'AuthController') {
+            header('Location:' . ROOT_URL . '?url=AuthController');
+            $this->renderDefault();
+        } elseif (!empty($_SESSION['user']) && $this->url[0] == 'AuthController') {
+            header('Location:' . ROOT_URL);
+            $this->renderDefault();
+        } else {
+            $this->renderDefault();
+        }
+    }
+    function renderDefault()
+    {
         if (!isset($this->url[0])) {
             $className        = $this->path . $this->nameController;
             $className        = preg_replace("~\/~", "\\", $className);
-            $this->controller = new $className;
-            $this->controller->homePage();
+            // Trong hàm renderController()
+            if (class_exists($className)) {
+                $this->controller = new $className;
+                if (method_exists($this->controller, 'homePage')) {
+                    $this->controller->homePage();
+                } else {
+                    // Xử lý khi phương thức homePage() không tồn tại
+                    header('Location:' . ROOT_URL . '?url=HomeController/Error');
+                }
+            } else {
+                // Xử lý khi class controller không tồn tại
+                header('Location:' . ROOT_URL . '?url=HomeController/Error');
+            }
         } else {
             $this->nameController = $this->url[0];
             $file                 = __DIR__ . '/../Controllers/' . $this->nameController . '.php';
-
             if (file_exists($file)) {
                 require_once $file;
                 $className        = $this->path . $this->nameController;
@@ -45,11 +68,11 @@ class Route
                 if (class_exists($className)) {
                     $this->controller = new $className;
                 } else {
-                    header('Location:' . ROOT_URL . 'HomeController/Error');
+                    header('Location:' . ROOT_URL . '?url=HomeController/Error');
                 }
             } else {
 
-                header('Location:' . ROOT_URL . 'HomeController/Error');
+                header('Location:' . ROOT_URL . '?url=HomeController/Error');
             }
         }
     }
@@ -61,7 +84,7 @@ class Route
             if (method_exists($this->controller, $this->nameMethod)) {
                 $this->controller->{$this->nameMethod}($this->url[2]);
             } else {
-                header('Location:' . ROOT_URL . 'HomeController/Error');
+                header('Location:' . ROOT_URL . '?url=HomeController/Error');
             }
         } else {
             // kiểm tra hàm có tồn tại hàm không có tham số 
@@ -71,7 +94,7 @@ class Route
                 if (method_exists($this->controller, $this->nameMethod)) {
                     $this->controller->{$this->nameMethod}();
                 } else {
-                    header('Location:' . ROOT_URL . 'HomeController/Error');
+                    header('Location:' . ROOT_URL . '?url=HomeController/Error');
                 }
             }
         }

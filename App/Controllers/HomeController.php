@@ -25,13 +25,20 @@ class HomeController extends BaseController
 
     function homePage()
     {
+        session_start();
         // dữ liệu ở đây lấy từ repositories hoặc model
         $data = $this->_model->getAllProductsWithCategoryName();
         $this->_renderBase->renderHeader();
         $this->load->render('layouts/home', $data);
         $this->_renderBase->renderFooter();
     }
-
+    function error()
+    {
+        $this->_renderBase->renderHeader();
+        var_dump("có vào đây");
+        $this->load->render('layouts/error');
+        $this->_renderBase->renderFooter();
+    }
     function detail($id)
     {
     }

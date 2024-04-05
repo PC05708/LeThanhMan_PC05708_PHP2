@@ -28,39 +28,42 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active text-light" aria-current="page" href="?url=HomeController/index">Xem tồn kho</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Quản Lý
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="?url=ProductController/index">Quản Lý sản phẩm</a></li>
-                                <li><a class="dropdown-item" href="?url=CategoryController/index">Quản lý danh mục</a></li>
-                                <li>
-                                    <hr>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="?url=UserController/index">Quản lý người dùng</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <div class="tai-khoan navbar-nav mx-5">
-                        <div class="dropdown">
-                            <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Tài khoản
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="#">Thông tin</a></li>
-                                <li><a class="dropdown-item" href="#">Đổi mật khẩu</a></li>
-                                <li><a class="dropdown-item" href="#">Đăng Xuất</a></li>
-                            </ul>
+                    <?php if (isset($_SESSION['user'])) : ?>
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active text-light" aria-current="page" href="?url=HomeController/homePage">Xem tồn kho </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Quản Lý
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="?url=ProductController/index">Quản Lý sản phẩm</a></li>
+                                    <li><a class="dropdown-item" href="?url=CategoryController/index">Quản lý danh mục</a></li>
+                                    <li>
+                                        <hr>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="?url=UserController/index">Quản lý người dùng</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="tai-khoan navbar-nav mx-5">
+                            <div class="dropdown">
+                                <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Tài khoản
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Thông tin</a></li>
+                                    <li><a class="dropdown-item" href="#">Đổi mật khẩu</a></li>
+                                    <li><a class="dropdown-item" href="?url=AuthController/logout">Đăng Xuất</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                    <?php else : ?>
+                        <a style="margin-left: 89%;" href="?url=AuthController/login" class="btn btn-warning">Đăng Nhập</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>
