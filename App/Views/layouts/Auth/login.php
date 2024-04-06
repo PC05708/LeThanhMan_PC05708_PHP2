@@ -11,7 +11,7 @@
             <input type="password" name="password" class="form-control" id="exampleInputPassword1">
         </div>
         <div class="mb-3 text-center">
-            <a href="?url=AuthController/forgetPass" class="">Quên Mật khẩu?</a>
+            <a href="?url=AuthController/forgetPass" class="">Quên Mật khẩu?</a> /
             <a href="?url=AuthController/register" class="">Đăng Ký</a>
         </div>
         <button type="submit" name="login" class="btn btn-primary form-control">Đăng Nhập</button>

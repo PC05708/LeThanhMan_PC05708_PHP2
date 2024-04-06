@@ -37,47 +37,44 @@ class UserController extends BaseController
     function create()
     {
         $data = [];
+        $data['err']['name'] = "";
         if (isset($_POST['add'])) {
             $name = $_POST['name'];
             $email = $_POST['email'];
+            $emailCheck = $this->_model->getUserByEmail($email);
             $pass = $_POST['pass'];
             $pasConfirm = $_POST['pass-confirm'];
             $check = true;
-            if (preg_match('/^[a-zA-Z0-9\s_-]{1,50}$/', $name) && !empty($name)) {
-                // Tên đúng theo mẫu và không rỗng
-                $data['err']['name'] = ""; // Không có lỗi
-            } else {
+            if (!preg_match('/^[\p{L}0-9\s_-]{1,50}$/u', $name) || empty($name)) {
                 // Tên không đúng theo mẫu hoặc rỗng
                 $data['err']['name'] = "Tên phải có ít nhất 1 ký tự, không vượt quá 50 ký tự và không chứa ký tự đặc biệt!";
                 $check = false; // Đánh dấu là có lỗi
             }
+            if (!empty($emailCheck)) {
+                $data['err']['email'] = "Email đã tồn tại!";
+                $check = false;
+            }
             if (empty($pass)) {
                 $data['err']['pass'] = "Mật khẩu không được để trống!";
                 $check = false;
-            } else {
-                $data['err']['pass'] = "";
             }
             if ($pass != $pasConfirm || empty($pasConfirm)) {
                 $data['err']['passConfirm'] = "Mật khẩu nhập lại không chính xác!";
                 $check = false;
-            } else {
-                $data['err']['passConfirm'] = "";
             }
             if (!filter_var($email, FILTER_VALIDATE_EMAIL) || empty($email)) {
                 $data['err']['email'] = "email không hợp lệ!";
                 $check = false;
-            } else {
-                $data['err']['email'] = "";
             }
             $data['content'] = [
-                "name" => $name,
-                "email" => $email,
-                "pass" => $pass
+                "name" => trim($name),
+                "email" => trim($email),
+                "pass" => trim($pass)
             ];
             if ($check) {
                 $data['content']['pass'] = password_hash($data['content']['pass'], PASSWORD_DEFAULT);
                 $this->_model->createUser($data['content']);
-                header("Location: ?url=UserController/index");
+                header("Location: ?url=AuthController/login");
                 exit();
             }
         }
