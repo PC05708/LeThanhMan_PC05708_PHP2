@@ -1,6 +1,6 @@
 <div class="container-fluid row d-flex justify-content-center mt-5">
     <form method="post" action="" enctype="multipart/form-data" class="col-6">
-        <h2>Quên mật khẩu</h2>
+        <h2 class="text-center">Quên mật khẩu</h2>
         <span class="text-danger"><?= $data['err'] ?? "" ?></span>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email tài khoản: </label>

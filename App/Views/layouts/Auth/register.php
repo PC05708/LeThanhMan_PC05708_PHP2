@@ -1,5 +1,5 @@
 <form action="" class="col-6 m-auto mt-5" enctype="multipart/form-data" method="post">
-    <h2>Đăng ký</h2>
+    <h2 class="text-center">Đăng ký</h2>
     <div class="mb-3">
         <label for="name" class="form-label">Tên người dùng: </label>
         <input type="text" name="name" value="<?= $data['content']['name'] ?? "" ?>" class="form-control" id="name" placeholder="Tên Người Dùng">
@@ -20,5 +20,9 @@
         <input type="password" value="<?= $data['content']['pasConfirm'] ?? "" ?>" name="pass-confirm" class="form-control" id="pass-confirm" placeholder="xác nhận mật khẩu">
         <span class="text-danger"><?= $data['err']['passConfirm'] ?? "" ?></span>
     </div>
-    <button name="register" class="btn btn-primary">Tạo tài khoản</button>
+    <div class="mb-3 text-center">
+        <a href="?url=AuthController/forgetPass" class="">Quên Mật khẩu?</a> /
+        <a href="?url=AuthController/login" class="">Đăng Nhập</a>
+    </div>
+    <button name="register" class="btn btn-primary form-control">Tạo tài khoản</button>
 </form>
