@@ -34,10 +34,7 @@ class HomeController extends BaseController
     }
     function error()
     {
-        $this->_renderBase->renderHeader();
-        var_dump("có vào đây");
         $this->load->render('layouts/error');
-        $this->_renderBase->renderFooter();
     }
     function detail($id)
     {

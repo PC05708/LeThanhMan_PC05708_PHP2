@@ -1,1 +1,1 @@
-<h2 text-center class="mt-5 text-danger"></h2>
+<h2 class="mt-5 text-danger text-center">Page not found</h2>

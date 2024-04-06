@@ -31,7 +31,7 @@ class Route
     {
         session_start();
         if (empty($_SESSION['user']) && $this->url[0] != 'AuthController') {
-            header('Location:' . ROOT_URL . '?url=AuthController');
+            header('Location:' . ROOT_URL . '?url=AuthController/login');
             $this->renderDefault();
         } elseif (!empty($_SESSION['user']) && $this->url[0] == 'AuthController') {
             header('Location:' . ROOT_URL);
