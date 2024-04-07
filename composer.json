@@ -7,7 +7,9 @@
             "email": "chithl@fe.edu.vn"
         }
     ],
-    "require": {},
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    },
     "autoload": {
         "psr-4": {
             "App\\": "./App/"

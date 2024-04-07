@@ -4,7 +4,9 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Core\BaseRender;
-use  App\Models\User;
+use App\Models\User;
+use App\Core\Mail;
+use DateTime;
 
 class AuthController extends BaseController
 {
@@ -91,7 +93,40 @@ class AuthController extends BaseController
     }
     function forgetPass()
     {
+        if (isset($_POST['resetPass'])) {
+            $email = $_POST['email'];
+            $data['content'] = $this->_model->getUserByEmail($email);
+            if (empty($data['content'])) {
+                $data['err'] = "Email không tồn tại! hoặc mật khẩu chưa đúng!";
+            } else {
+                $_SESSION['OTP']['value'] = rand(100000, 999999);
+                $_SESSION['OTP']['time'] = new DateTime();
+
+                $senderName = "PC05708 - PHP 2";
+                $senderEmail = "manltpc05708@fpt.edu.vn";
+                $senderEmailPassword = "gxtm vuxn jeri fwxd";
+                $recieverEmail = "thanhman2408@gmail.com";
+                $subject = "Mã thay đổi mật khẩu!";
+                $body = "Mã thay đổi mật khẩu của bạn là: <strong>" . $_SESSION['OTP']['value'] . "</strfong>";
+
+                $mailer = new Mail($senderName, $senderEmail, $senderEmailPassword);
+                $mailer->sendMail($recieverEmail, $subject, $body);
+                header('Location: /?url=AuthController/confirmOTP');
+                exit();
+            }
+        }
+        $this->_renderBase->renderHeader();
+        $this->load->render('layouts/Auth/forgetPass', $data);
+        $this->_renderBase->renderFooter();
+    }
+    function confirmOTP()
+    {
         $data = [];
+        if (isset($_POST['confirmOTP']) && $_SESSION['OTP']) {
+        } else {
+            header('Location: /?url=AuthController/forgetPass');
+            exit();
+        }
         $this->_renderBase->renderHeader();
         $this->load->render('layouts/Auth/forgetPass', $data);
         $this->_renderBase->renderFooter();
