@@ -24,7 +24,7 @@
                     <td><?= $product['name'] ?? "" ?></td>
                     <td>
                         <figure>
-                            <img width="35px" src="<?= $ROOT_URL ?? "" ?>/public/uploads/img/iphone-15-pro-max_3.webp" alt="">
+                            <img width="35px" src="<?= ROOT_URL ?? "" ?><?= $product['img'] ?>" alt="">
                         </figure>
                     </td>
                     <td><?= $product['category_name'] ?? "" ?></td>

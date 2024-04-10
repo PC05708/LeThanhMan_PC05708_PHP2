@@ -119,9 +119,6 @@ class ProductController extends BaseController
         }
         // Hiển thị form và dữ liệu lỗi (nếu có)
         $this->_renderBase->renderHeader();
-        echo "<pre>";
-        print_r($data);
-        echo "</pre>";
         $this->load->render('layouts/product/create', $data);
         $this->_renderBase->renderFooter();
     }
