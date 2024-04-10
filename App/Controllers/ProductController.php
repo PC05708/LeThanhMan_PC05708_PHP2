@@ -46,4 +46,12 @@ class ProductController extends BaseController
         $this->load->render('layouts/product/detail', $data);
         $this->_renderBase->renderFooter();
     }
+    function delete()
+    {
+        if (isset($_GET['id'])) {
+            $this->_model->deleteProduct($_GET['id']);
+            header("Location: ?url=ProductController/index");
+            exit();
+        }
+    }
 }

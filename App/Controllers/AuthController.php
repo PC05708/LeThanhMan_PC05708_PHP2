@@ -93,24 +93,15 @@ class AuthController extends BaseController
     }
     function forgetPass()
     {
+        $data = [];
         if (isset($_POST['resetPass'])) {
             $email = $_POST['email'];
             $data['content'] = $this->_model->getUserByEmail($email);
+            $data['err'] = [];
             if (empty($data['content'])) {
                 $data['err'] = "Email không tồn tại! hoặc mật khẩu chưa đúng!";
             } else {
-                $_SESSION['OTP']['value'] = rand(100000, 999999);
-                $_SESSION['OTP']['time'] = new DateTime();
-
-                $senderName = "PC05708 - PHP 2";
-                $senderEmail = "manltpc05708@fpt.edu.vn";
-                $senderEmailPassword = "gxtm vuxn jeri fwxd";
-                $recieverEmail = "thanhman2408@gmail.com";
-                $subject = "Mã thay đổi mật khẩu!";
-                $body = "Mã thay đổi mật khẩu của bạn là: <strong>" . $_SESSION['OTP']['value'] . "</strfong>";
-
-                $mailer = new Mail($senderName, $senderEmail, $senderEmailPassword);
-                $mailer->sendMail($recieverEmail, $subject, $body);
+                $_SESSION['OTP']['mail'] = $email;
                 header('Location: /?url=AuthController/confirmOTP');
                 exit();
             }
@@ -119,18 +110,56 @@ class AuthController extends BaseController
         $this->load->render('layouts/Auth/forgetPass', $data);
         $this->_renderBase->renderFooter();
     }
+
     function confirmOTP()
     {
+        session_start();
         $data = [];
-        if (isset($_POST['confirmOTP']) && $_SESSION['OTP']) {
-        } else {
+        $data['content'];
+        if (isset($_POST['confirmOTP']) && !empty($_SESSION['OTP']['mail'])) {
+            // Xử lý xác nhận OTP ở đây
+            $data['content'] = $this->_model->getUserByEmail($_SESSION['OTP']['mail']);
+            $OTP = $_POST['OTP'];
+            $newPass = $_POST['pass'];
+            if ($OTP == $_SESSION['OTP']['value']) {
+                $data['content']['pass'] = password_hash($newPass, PASSWORD_DEFAULT);
+                $this->_model->updateUser($data['content']['id'], $data['content']);
+                unset($_SESSION['OTP']);
+                header("Location:?url=AuthController/login");
+                exit();
+            } else {
+                $data['err'] = "OTP không đúng! hoặc đã quá hạn!";
+            }
+        } elseif (!isset($_SESSION['OTP']['mail'])) {
             header('Location: /?url=AuthController/forgetPass');
             exit();
         }
+
+        // Gửi email sau khi đã xử lý xác nhận OTP
+        if (isset($_POST['sendOTP'])) {
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            if (!isset($_SESSION['lastButtonClick']) || (time() - $_SESSION['lastButtonClick'] >= 30)) {
+                $_SESSION['lastButtonClick'] = time();
+                $_SESSION['OTP']['value'] = rand(100000, 999999);
+                $senderName = "PC05708 - PHP 2";
+                $senderEmail = "manltpc05708@fpt.edu.vn";
+                $senderEmailPassword = "gxtm vuxn jeri fwxd";
+                $recieverEmail = $_SESSION['OTP']['mail'];
+                $subject = "Mã thay đổi mật khẩu!";
+                $body = "Mã thay đổi mật khẩu của bạn là: <strong>" . $_SESSION['OTP']['value'] . "</strong>";
+
+                $mailer = new Mail($senderName, $senderEmail, $senderEmailPassword);
+                $mailer->sendMail($recieverEmail, $subject, $body);
+            } else {
+                $countDown = 30 - (time() - $_SESSION['lastButtonClick']);
+                $data['time'] = "Còn " . $countDown . "s nữa mới có thể gửi lại"; // Không cho phép nhấn nút
+            }
+        }
         $this->_renderBase->renderHeader();
-        $this->load->render('layouts/Auth/forgetPass', $data);
+        $this->load->render('layouts/Auth/confirmOTP', $data);
         $this->_renderBase->renderFooter();
     }
+
     function logout()
     {
         session_start();

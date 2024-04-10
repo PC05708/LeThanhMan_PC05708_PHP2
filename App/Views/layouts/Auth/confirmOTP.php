@@ -1,15 +1,17 @@
 <div class="container-fluid row d-flex justify-content-center mt-5">
     <form method="post" action="" enctype="multipart/form-data" class="col-6">
-        <h2 class="text-center">Quên mật khẩu</h2>
+        <h2 class="text-center">Cập nhật mật khẩu</h2>
         <span class="text-danger"><?= $data['err'] ?? "" ?></span>
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email tài khoản: </label>
-            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <label for="exampleInputEmail1" class="form-label">Mã OTP: </label>
+            <input type="text" name="OTP" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
         </div>
-        <div class="mb-3 text-center">
-            <a href="?url=AuthController/login" class="">Đăng nhập</a> /
-            <a href="?url=AuthController/register" class="">Đăng Ký</a>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Mật khẩu mới: </label>
+            <input type="pass" name="pass" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
         </div>
-        <button type="submit" name="resetPass" class="btn btn-primary form-control">Nhận mã đổi mật khẩu</button>
+        <button type="submit" name="sendOTP" class="btn btn-warning form-control">Gửi mã OTP</button>
+        <div class="text-danger mb-2"><span id="time"><?= $data['time'] ?? '' ?></span></div>
+        <button type="submit" name="confirmOTP" class="btn btn-primary form-control mt-3">Thay đổi mật khẩu</button>
     </form>
 </div>

@@ -74,7 +74,7 @@ class UserController extends BaseController
             if ($check) {
                 $data['content']['pass'] = password_hash($data['content']['pass'], PASSWORD_DEFAULT);
                 $this->_model->createUser($data['content']);
-                header("Location: ?url=AuthController/login");
+                header("Location: ?url=UserController/index");
                 exit();
             }
         }

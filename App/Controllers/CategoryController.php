@@ -37,7 +37,7 @@ class CategoryController extends BaseController
                 "name" => $name
             ];
             $this->_model->create($data);
-            header("Location: ?url=UserController/index");
+            header("Location: ?url=CategoryController/index");
             exit();
         }
         $this->_renderBase->renderHeader();
@@ -50,5 +50,13 @@ class CategoryController extends BaseController
         $this->_renderBase->renderHeader();
         $this->load->render('layouts/categories/update', $data);
         $this->_renderBase->renderFooter();
+    }
+    function delete()
+    {
+        if (isset($_GET['id'])) {
+            $this->_model->deleteCategory($_GET['id']);
+            header("Location: ?url=CategoryController/index");
+            exit();
+        }
     }
 }
