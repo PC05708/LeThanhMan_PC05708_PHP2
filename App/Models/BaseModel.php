@@ -49,25 +49,33 @@ abstract class BaseModel implements CrudInterface
     }
     public function create(array $data)
     {
-        $this->_query = "INSERT INTO $this->table (";
-        foreach ($data as $key => $value) {
-            $this->_query .= "$key, ";
+        // Loại bỏ cột 'id' nếu nó là cột tự tăng
+        if (isset($data['id'])) {
+            unset($data['id']);
         }
-        $this->_query = rtrim($this->_query, ", ");
 
-        $this->_query .=   " ) VALUES (";
-        foreach ($data as $key => $value) {
-            $this->_query .= "'$value', ";
+        // Tạo các phần của câu truy vấn SQL
+        $columns = implode(', ', array_map(function ($column) {
+            return "`$column`";
+        }, array_keys($data)));
+        $placeholders = implode(', ', array_fill(0, count($data), '?'));
+
+        // Tạo câu truy vấn SQL hoàn chỉnh
+        $query = "INSERT INTO $this->table ($columns) VALUES ($placeholders)";
+
+        // Chuẩn bị và thực thi câu truy vấn SQL
+        $stmt = $this->_connection->PdO()->prepare($query);
+
+        // Thực hiện gán các giá trị vào các placeholder
+        $index = 1;
+        foreach ($data as $value) {
+            $stmt->bindValue($index++, $value);
         }
-        $this->_query = rtrim($this->_query, ", ");
 
-        $this->_query .= ")";
-
-        $stmt = $this->_connection->PdO()->prepare($this->_query);
-
+        // Thực thi câu truy vấn và trả về kết quả
         return $stmt->execute();
-        // return $stmt;
     }
+
 
     public function update(int $id, array $data)
     {
