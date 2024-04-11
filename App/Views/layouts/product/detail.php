@@ -2,7 +2,7 @@
     <div class="row container-content">
         <div class="img col-4">
             <figure>
-                <img src="<?= $ROOT_URL ?? "" ?>/public/uploads/img/iphone-15-pro-max_3.webp" alt="">
+                <img src="<?= $ROOT_URL ?? "" ?><?= $data['img'] ?? "" ?>" width="350px" alt="">
             </figure>
         </div>
         <div class="info col-8">

@@ -42,5 +42,5 @@
         <textarea name="note" id="note" cols="30" rows="10"></textarea>
         <span class="text-danger"><?= $data['err']['note'] ?? "" ?></span>
     </div>
-    <button name="add" class="btn btn-primary">Thêm người dùng</button>
+    <button name="add" class="btn btn-primary">Thêm Sản phẩm</button>
 </form>

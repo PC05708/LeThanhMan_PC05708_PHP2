@@ -2,22 +2,22 @@
     <h2>Thêm sản phẩm</h2>
     <div class="mb-3">
         <label for="name" class="form-label">Tên sản phẩm: </label>
-        <input type="text" name="name" class="form-control" id="name" placeholder="Tên sản phẩm">
+        <input type="text" name="name" class="form-control" id="name" value="<?= $data['content']['name'] ?? "" ?>" placeholder="Tên sản phẩm">
         <span class="text-danger"><?= $data['err']['name'] ?? "" ?></span>
     </div>
     <div class="mb-3">
         <label for="price" class="form-label">Giá: </label>
-        <input type="text" name="price" class="form-control" id="price" placeholder="giá sản phẩm">
+        <input type="text" name="price" class="form-control" id="price" value="<?= $data['content']['price'] ?? "" ?>" placeholder="giá sản phẩm">
         <span class="text-danger"><?= $data['err']['price'] ?? "" ?></span>
     </div>
     <div class="mb-3">
         <label for="date_create" class="form-label">Ngày nhập hàng: </label>
-        <input type="date" name="date_create" class="form-control" id="date_create" placeholder="ngày nhập hàng">
+        <input type="date" name="date_create" class="form-control" id="date_create" value="<?= $data['content']['date_create'] ?? "" ?>" placeholder="ngày nhập hàng">
         <span class="text-danger"><?= $data['err']['date_create'] ?? "" ?></span>
     </div>
     <div class="mb-3">
         <label for="quantity" class="form-label">Số lượng hàng: </label>
-        <input type="number" name="quantity" class="form-control" id="quantity" placeholder="số lượng hàng">
+        <input type="number" name="quantity" class="form-control" id="quantity" value="<?= $data['content']['quantity'] ?? "" ?>" placeholder="số lượng hàng">
         <span class="text-danger"><?= $data['err']['quantity'] ?? "" ?></span>
     </div>
     <div class="mb-3">
@@ -26,7 +26,9 @@
             <option selected>Danh mục sản phẩm</option>
             <?php if (isset($data['categories'])) : ?>
                 <?php foreach ($data['categories'] as $value) : ?>
-                    <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                    <option value="<?= $value['id'] ?>" <?php if ($value['id'] == $data['content']['id_category']) echo "selected"; ?>>
+                        <?= $value['name'] ?>
+                    </option>
                 <?php endforeach; ?>
             <?php endif; ?>
         </select>
@@ -35,12 +37,20 @@
     <div class="mb-3">
         <label for="img" class="form-label">Ảnh sản phẩm: </label>
         <input type="file" name="image" class="form-control" id="img" placeholder="Ảnh sản phẩm">
+        <?php if (isset($data['content']['img'])) : ?>
+            <figure class="mt-3 d-flex justify-content-center">
+                <div>
+                    <img src="<?= ROOT_URL ?><?= $data['content']['img'] ?? "" ?>" width="500px" alt="">
+                    <figcaption>Ảnh trước khi cập nhật</figcaption>
+                </div>
+            </figure>
+        <?php endif; ?>
         <span class="text-danger"><?= $data['err']['image'] ?? "" ?></span>
     </div>
     <div class="mb-3">
         <label for="note" class="form-label">Mô tả sản phẩm: </label>
-        <textarea name="note" id="note" cols="30" rows="10"></textarea>
+        <textarea name="note" id="note" cols="30" rows="10"><?= $data['content']['desc'] ?? "" ?></textarea>
         <span class="text-danger"><?= $data['err']['note'] ?? "" ?></span>
     </div>
-    <button name="add" class="btn btn-primary">Thêm người dùng</button>
+    <button name="update" class="btn btn-primary">Cập nhật Sản phẩm</button>
 </form>

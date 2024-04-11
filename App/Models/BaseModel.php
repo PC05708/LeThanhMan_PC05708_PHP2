@@ -80,14 +80,22 @@ abstract class BaseModel implements CrudInterface
     public function update(int $id, array $data)
     {
         $this->_query = "UPDATE $this->table SET ";
+        $values = [];
         foreach ($data as $key => $value) {
-            $this->_query .= "$key = '$value', ";
+            // Sử dụng tham số hóa để tránh lỗi SQL injection
+            $values[] = "`$key` = :$key";
         }
-        $this->_query = rtrim($this->_query, ", ");
-        $this->_query .= " WHERE id=$id";
+        $this->_query .= implode(", ", $values);
+        $this->_query .= " WHERE id=:id";
+
+        // Tham số hóa id
+        $data['id'] = $id;
+
         $stmt = $this->_connection->PdO()->prepare($this->_query);
-        return $stmt->execute();
+        return $stmt->execute($data);
     }
+
+
     public function delete(int $id): bool
     {
         $this->_query = "DELETE FROM $this->table WHERE id=$id";
