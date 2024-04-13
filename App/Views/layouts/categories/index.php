@@ -5,6 +5,9 @@
             <a href="?url=CategoryController/create" class="btn btn-primary"> Thêm danh mục </a>
         </div>
     </div>
+    <?php if (!empty($data)) : ?>
+        <p class="text-center text-danger"><?= $data['err'] ?? "" ?></p>
+    <?php endif ?>
     <div class="row">
         <div class="col-6 m-auto">
             <table class="table mt-3">

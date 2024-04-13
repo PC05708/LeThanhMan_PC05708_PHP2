@@ -36,7 +36,7 @@ abstract class BaseModel implements CrudInterface
         $this->_query = "SELECT * FROM $this->table WHERE $column = :value";
         $stmt = $this->_connection->PDO()->prepare($this->_query);
         $stmt->execute(['value' => $value]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getOne(int $id)

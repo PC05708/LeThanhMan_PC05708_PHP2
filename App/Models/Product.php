@@ -88,7 +88,10 @@ class Product extends BaseModel
     {
         return $this->delete($id);
     }
-
+    public function getProductByIdCategory($id)
+    {
+        return $this->conditionalTake("id_category", $id);
+    }
     public function createProduct($data)
     {
         return $this->create($data);

@@ -4,13 +4,16 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Core\BaseRender;
-use  App\Models\Category;
+use App\Models\Category;
+use App\Models\Product;
 
 class CategoryController extends BaseController
 {
 
     private $_renderBase;
     private $_model;
+    private $_product;
+    private $_idCategoryDefault = 7;
 
     function __construct()
     {
@@ -53,10 +56,19 @@ class CategoryController extends BaseController
     }
     function delete()
     {
-        if (isset($_GET['id'])) {
-            $this->_model->deleteCategory($_GET['id']);
-            header("Location: ?url=CategoryController/index");
-            exit();
+        if (isset($_GET['id']) && $_GET['id'] == $this->_idCategoryDefault) {
+            $data['err'] = "KHÔNG THỂ XÓA DANH MỤC MẶC ĐỊNH!";
+            $this->_renderBase->renderHeader();
+            $this->load->render('layouts/categories/delete', $data);
+            $this->_renderBase->renderFooter();
+        } else {
+            if (isset($_GET['id'])) {
+
+                // dddang sua casjkfashjaksch owr day
+                $this->_model->deleteCategory($_GET['id']);
+                header("Location: ?url=CategoryController/index");
+                exit();
+            }
         }
     }
 }

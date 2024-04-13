@@ -119,6 +119,11 @@ class AuthController extends BaseController
         if (isset($_POST['confirmOTP']) && !empty($_SESSION['OTP']['mail'])) {
             // Xử lý xác nhận OTP ở đây
             $data['content'] = $this->_model->getUserByEmail($_SESSION['OTP']['mail']);
+            echo "<pre>";
+            print_r(extract($data['content']));
+            echo "</pre>";
+
+            exit();
             $OTP = $_POST['OTP'];
             $newPass = $_POST['pass'];
             if ($OTP == $_SESSION['OTP']['value']) {

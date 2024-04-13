@@ -46,7 +46,4 @@ class HomeController extends BaseController
     {
         $this->load->render('layouts/error');
     }
-    function detail($id)
-    {
-    }
 }

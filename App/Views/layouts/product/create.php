@@ -26,7 +26,9 @@
             <option selected>Danh mục sản phẩm</option>
             <?php if (isset($data['categories'])) : ?>
                 <?php foreach ($data['categories'] as $value) : ?>
-                    <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                    <option value="<?= $value['id'] ?>" <?php if ($value['id'] == 7) echo "selected"; ?>>
+                        <?= $value['name'] ?>
+                    </option>
                 <?php endforeach; ?>
             <?php endif; ?>
         </select>
