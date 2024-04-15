@@ -1,5 +1,6 @@
 <form action="" class="col-6 m-auto mt-5" enctype="multipart/form-data" method="post">
     <h2>Thêm sản phẩm</h2>
+    <b class="text-danger"><?= $data['err']['create'] ?? "" ?></b>
     <div class="mb-3">
         <label for="name" class="form-label">Tên sản phẩm: </label>
         <input type="text" name="name" class="form-control" id="name" placeholder="Tên sản phẩm">
@@ -37,7 +38,7 @@
     <div class="mb-3">
         <label for="img" class="form-label">Ảnh sản phẩm: </label>
         <input type="file" name="image" class="form-control" id="img" placeholder="Ảnh sản phẩm">
-        <span class="text-danger"><?= $data['err']['image'] ?? "" ?></span>
+        <span class="text-danger"><?= $data['err']['img'] ?? "" ?></span>
     </div>
     <div class="mb-3">
         <label for="note" class="form-label">Mô tả sản phẩm: </label>

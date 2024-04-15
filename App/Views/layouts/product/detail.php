@@ -13,7 +13,7 @@
             <p class="mt-2 text-justify"><?= $data['desc'] ?? "" ?></p>
             <p class="mt-2"><b>Danh mục sản phẩm:</b> <?= $data['category_name'] ?? "" ?></p>
             <p class="mt-2"><b>Ngày nhập hàng:</b> <?= $data['date_create'] ?? "" ?></p>
-            <a href="" class="btn btn-warning mt-5">Sửa thông tin sản phẩm</a>
+            <a href="?url=ProductController/update&id=<?= $data['id'] ?? "" ?>" class="btn btn-warning mt-5">Sửa thông tin sản phẩm</a>
         </div>
     </div>
 </div>

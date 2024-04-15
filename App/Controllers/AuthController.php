@@ -115,37 +115,48 @@ class AuthController extends BaseController
     {
         session_start();
         $data = [];
-        $data['content'];
-        if (isset($_POST['confirmOTP']) && !empty($_SESSION['OTP']['mail'])) {
-            // Xử lý xác nhận OTP ở đây
-            $data['content'] = $this->_model->getUserByEmail($_SESSION['OTP']['mail']);
-            echo "<pre>";
-            print_r(extract($data['content']));
-            echo "</pre>";
 
-            exit();
-            $OTP = $_POST['OTP'];
-            $newPass = $_POST['pass'];
+        // Xử lý xác nhận OTP
+        if (isset($_POST['confirmOTP']) && !empty($_SESSION['OTP']['mail'])) {
+            $OTP = isset($_POST['OTP']) ? $_POST['OTP'] : '';
+            $newPass = isset($_POST['pass']) ? $_POST['pass'] : '';
+
+            // Kiểm tra xem OTP có đúng không
             if ($OTP == $_SESSION['OTP']['value']) {
-                $data['content']['pass'] = password_hash($newPass, PASSWORD_DEFAULT);
-                $this->_model->updateUser($data['content']['id'], $data['content']);
-                unset($_SESSION['OTP']);
-                header("Location:?url=AuthController/login");
-                exit();
+                // Lấy thông tin người dùng từ email
+                $userData = $this->_model->getUserByEmail($_SESSION['OTP']['mail']);
+
+                // Kiểm tra xem có dữ liệu người dùng không
+                if ($userData) {
+                    // Cập nhật mật khẩu mới
+                    $userData['pass'] = password_hash($newPass, PASSWORD_DEFAULT);
+                    $this->_model->updateUser($userData['id'], $userData);
+
+                    // Xóa phiên OTP và chuyển hướng đến trang đăng nhập
+                    unset($_SESSION['OTP']);
+                    header("Location:?url=AuthController/login");
+                    exit();
+                } else {
+                    $data['err'] = "Không tìm thấy người dùng.";
+                }
             } else {
-                $data['err'] = "OTP không đúng! hoặc đã quá hạn!";
+                $data['err'] = "OTP không đúng hoặc đã hết hạn!";
             }
         } elseif (!isset($_SESSION['OTP']['mail'])) {
+            // Nếu không có email trong phiên OTP, chuyển hướng đến trang quên mật khẩu
             header('Location: /?url=AuthController/forgetPass');
             exit();
         }
 
-        // Gửi email sau khi đã xử lý xác nhận OTP
+        // Gửi email với mã OTP
         if (isset($_POST['sendOTP'])) {
+            // Kiểm tra xem có quá 30 giây kể từ lần gửi trước không
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             if (!isset($_SESSION['lastButtonClick']) || (time() - $_SESSION['lastButtonClick'] >= 30)) {
                 $_SESSION['lastButtonClick'] = time();
                 $_SESSION['OTP']['value'] = rand(100000, 999999);
+
+                // Gửi email với mã OTP mới
                 $senderName = "PC05708 - PHP 2";
                 $senderEmail = "manltpc05708@fpt.edu.vn";
                 $senderEmailPassword = "gxtm vuxn jeri fwxd";
@@ -160,10 +171,13 @@ class AuthController extends BaseController
                 $data['time'] = "Còn " . $countDown . "s nữa mới có thể gửi lại"; // Không cho phép nhấn nút
             }
         }
+
+        // Hiển thị giao diện
         $this->_renderBase->renderHeader();
         $this->load->render('layouts/Auth/confirmOTP', $data);
         $this->_renderBase->renderFooter();
     }
+
 
     function logout()
     {

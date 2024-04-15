@@ -8,36 +8,9 @@
                 </div>
             </form>
             <ul class="list-unstyled mt-3">
-                <h6 class="border-bottom">Sắp xếp theo giá</h6>
-                <!-- Sắp xếp theo giá -->
-                <form action="" method="post" enctype="multipart/form-data">
-                    <li class="p-2">
-                        <button type="submit" name="orderBy" value="price_asc" class="btn btn-link nav-link">Tăng dần</button>
-                    </li>
-                    <li class="p-2">
-                        <button type="submit" name="orderBy" value="price_desc" class="btn btn-link nav-link">Giảm dần</button>
-                    </li>
-                </form>
-                <h6 class="border-bottom">Sắp xếp theo ngày</h6>
-                <!-- Sắp xếp theo Ngày -->
-                <form action="" method="post" enctype="multipart/form-data">
-                    <li class="p-2">
-                        <button type="submit" name="orderBy" value="date_asc" class="btn btn-link nav-link">Tăng dần</button>
-                    </li>
-                    <li class="p-2">
-                        <button type="submit" name="orderBy" value="date_desc" class="btn btn-link nav-link">Giảm dần</button>
-                    </li>
-                </form>
-                <h6 class="border-bottom">Sắp xếp theo số lượng</h6>
-                <!-- Sắp xếp theo số lượng -->
-                <form action="" method="post" enctype="multipart/form-data">
-                    <li class="p-2">
-                        <button type="submit" name="orderBy" value="quantity_asc" class="btn btn-link nav-link">Tăng dần</button>
-                    </li>
-                    <li class="p-2">
-                        <button type="submit" name="orderBy" value="quantity_desc" class="btn btn-link nav-link">Giảm dần</button>
-                    </li>
-                </form>
+                <li>
+                    <a class="text-primary" href="?url=StatisticsController/index"><b>Xem thống kê</b></a>
+                </li>
             </ul>
         </aside>
         <div class="col-9">
@@ -51,8 +24,24 @@
                             <th scope="col">STT</th>
                             <th scope="col">Tên sản phẩm</th>
                             <th scope="col">Loại</th>
-                            <th scope="col">Giá</th>
-                            <th scope="col">Số lượng</th>
+                            <th scope="col">
+                                <div class="d-flex align-items-center gap-2">
+                                    <p class="m-0">Giá</p>
+                                    <form class="d-flex gap-1" action="" method="post" enctype="multipart/form-data">
+                                        <button type="submit" name="orderBy" value="price_asc" class="btn btn-link nav-link"><i class="ri-sort-number-asc text-primary"></i></button>
+                                        <button type="submit" name="orderBy" value="price_desc" class="btn btn-link nav-link"><i class="ri-sort-number-desc text-primary"></i></button>
+                                    </form>
+                                </div>
+                            </th>
+                            <th scope="col">
+                                <div class="d-flex align-items-center gap-2">
+                                    <p class="m-0">Số Lượng</p>
+                                    <form class="d-flex gap-1" action="" method="post" enctype="multipart/form-data">
+                                        <button type="submit" name="orderBy" value="quantity_asc" class="btn btn-link nav-link"><i class="ri-sort-number-asc text-primary"></i></button>
+                                        <button type="submit" name="orderBy" value="quantity_desc" class="btn btn-link nav-link"><i class="ri-sort-number-desc text-primary"></i></button>
+                                    </form>
+                                </div>
+                            </th>
                             <th></th>
                         </tr>
                     </thead>

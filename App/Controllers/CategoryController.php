@@ -20,6 +20,7 @@ class CategoryController extends BaseController
         parent::__construct();
         $this->_renderBase = new BaseRender();
         $this->_model = new Category();
+        $this->_product = new Product();
     }
 
 
@@ -63,8 +64,9 @@ class CategoryController extends BaseController
             $this->_renderBase->renderFooter();
         } else {
             if (isset($_GET['id'])) {
-
-                // dddang sua casjkfashjaksch owr day
+                // chuyển các sản phẩm trong danh mục hiện tại sang mặc định
+                $this->_product->updateProductWhere('id_category', $this->_idCategoryDefault, $_GET['id']);
+                // xóa danh mục đã chọn
                 $this->_model->deleteCategory($_GET['id']);
                 header("Location: ?url=CategoryController/index");
                 exit();

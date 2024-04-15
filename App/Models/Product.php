@@ -71,6 +71,33 @@ class Product extends BaseModel
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public function countProductsByCategory()
+    {
+        // Kết nối đến cơ sở dữ liệu và thực hiện truy vấn
+        $query = "SELECT c.name AS category_name, COUNT(*) AS product_count 
+        FROM products p 
+        JOIN categories c ON p.id_category = c.id 
+        GROUP BY p.id_category;
+        ";
+        $stmt = $this->_connection->PdO()->prepare($query);
+        $stmt->execute();
+        // Lấy kết quả từ truy vấn
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function updateProductWhere($column, $value, $whereValue)
+    {
+        // Chuẩn bị câu truy vấn
+        $query = "UPDATE products SET $column = :value WHERE $column = :whereValue";
+
+        // Chuẩn bị các giá trị để truyền vào câu truy vấn
+        $params = array(':value' => $value, ':whereValue' => $whereValue);
+
+        // Chuẩn bị và thực thi câu lệnh
+        $stmt = $this->_connection->PdO()->prepare($query);
+        return $stmt->execute($params);
+    }
+
     public function getAllProduct()
     {
         return $this->getAll();
@@ -90,7 +117,7 @@ class Product extends BaseModel
     }
     public function getProductByIdCategory($id)
     {
-        return $this->conditionalTake("id_category", $id);
+        return $this->conditionalTakeAll("id_category", $id);
     }
     public function createProduct($data)
     {

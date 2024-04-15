@@ -18,7 +18,7 @@ class User extends BaseModel
     }
     public function getUserByEmail($email)
     {
-        return $this->conditionalTake("email", $email);
+        return $this->conditionalTakeOne("email", $email);
     }
 
     public function updateUser($id, $data)

@@ -31,7 +31,14 @@ abstract class BaseModel implements CrudInterface
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function conditionalTake($column, $value)
+    public function conditionalTakeOne($column, $value)
+    {
+        $this->_query = "SELECT * FROM $this->table WHERE $column = :value";
+        $stmt = $this->_connection->PDO()->prepare($this->_query);
+        $stmt->execute(['value' => $value]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function conditionalTakeAll($column, $value)
     {
         $this->_query = "SELECT * FROM $this->table WHERE $column = :value";
         $stmt = $this->_connection->PDO()->prepare($this->_query);

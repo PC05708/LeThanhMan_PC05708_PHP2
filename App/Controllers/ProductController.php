@@ -59,7 +59,7 @@ class ProductController extends BaseController
                 $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
 
                 // Kiểm tra phần mở rộng của file
-                $allowedExtensions = array("jpg", "jpeg", "png", "gif");
+                $allowedExtensions = array("jpg", "jpeg", "png", "gif", "webp");
                 if (in_array($fileType, $allowedExtensions)) {
                     // Di chuyển file tải lên vào thư mục đích
                     if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
@@ -115,9 +115,12 @@ class ProductController extends BaseController
                     "desc" => trim($note),
                     "img" => trim($targetFilePath)
                 ];
+                echo "vào được đây rồi nè!";
                 $this->_model->createProduct($data['content']);
                 header("Location: ?url=ProductController/index");
                 exit();
+            } else {
+                $data['err']['create'] =  "Đã có lỗi trong quá trình thêm!";
             }
         }
         // Hiển thị form và dữ liệu lỗi (nếu có)
