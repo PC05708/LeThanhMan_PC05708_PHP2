@@ -27,6 +27,28 @@ class Product extends BaseModel
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    // nên sắp sếp theo hàm riêng, để khi tìm kiếm vẫn có thể sắp xếp được
+    // ví dụ
+    //     // Mảng các sản phẩm
+    // $products = array(
+    //     array("id" => 1, "name" => "Product A", "price" => 20),
+    //     array("id" => 2, "name" => "Product B", "price" => 15),
+    //     array("id" => 3, "name" => "Product C", "price" => 25)
+    // );
+
+    // // Hàm sắp xếp mảng sản phẩm theo giá tăng dần
+    // function sortByPriceAscending($a, $b) {
+    //     return $a['price'] - $b['price'];
+    // }
+
+    // // Sắp xếp mảng sản phẩm
+    // usort($products, 'sortByPriceAscending');
+
+    // // In ra kết quả
+    // foreach ($products as $product) {
+    //     echo "Product: " . $product['name'] . ", Price: $" . $product['price'] . "<br>";
+    // }
+
     function searchByName($keyWord)
     {
         if (empty($keyWord)) {
@@ -43,12 +65,10 @@ class Product extends BaseModel
 
     function orderBy($orderBy)
     {
-        $validOrders = ['price_asc', 'price_desc', 'date_asc', 'date_desc', 'quantity_asc', 'quantity_desc']; // Các giá trị hợp lệ
+        $validOrders = ['price_asc', 'price_desc', 'quantity_asc', 'quantity_desc']; // Các giá trị hợp lệ
         $orderByColumns = [
             'price_asc' => 'price ASC',
             'price_desc' => 'price DESC',
-            'date_asc' => 'date_create ASC',
-            'date_desc' => 'date_create DESC',
             'quantity_asc' => 'quantity ASC',
             'quantity_desc' => 'quantity DESC'
         ];

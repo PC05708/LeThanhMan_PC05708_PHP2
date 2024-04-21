@@ -36,13 +36,17 @@ class CategoryController extends BaseController
     {
         $data = [];
         if (isset($_POST['add'])) {
-            $name = $_POST['name'];
-            $data = [
-                "name" => $name
-            ];
-            $this->_model->create($data);
-            header("Location: ?url=CategoryController/index");
-            exit();
+            if (!empty($_POST['name'])) {
+                $name = $_POST['name'];
+                $data = [
+                    "name" => $name
+                ];
+                $this->_model->create($data);
+                header("Location: ?url=CategoryController/index");
+                exit();
+            } else {
+                $data['err']['name'] = "Không được bỏ trống!";
+            }
         }
         $this->_renderBase->renderHeader();
         $this->load->render('layouts/categories/create', $data);
@@ -51,14 +55,33 @@ class CategoryController extends BaseController
     function update()
     {
         $data = [];
+        if (!empty($_GET['id'])) {
+            $data['update'] = $this->_model->getOne($_GET['id']);
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
+
+                $dataUpdate['name'] = isset($_POST['name']) ? $_POST['name'] : '';
+
+                if (empty($dataUpdate['name'])) {
+                    $data['err']['name'] = "Vui lòng nhập tên danh mục";
+                } else {
+                    $this->_model->updateCategory($_GET['id'], $dataUpdate);
+                    header("Location: ?url=CategoryController/index");
+                    exit();
+                }
+            }
+        } else {
+            $data['err']['404'] = "Không xác định được danh mục cần sửa!";
+        }
+        // Render header và footer
         $this->_renderBase->renderHeader();
         $this->load->render('layouts/categories/update', $data);
         $this->_renderBase->renderFooter();
     }
+
     function delete()
     {
         if (isset($_GET['id']) && $_GET['id'] == $this->_idCategoryDefault) {
-            $data['err'] = "KHÔNG THỂ XÓA DANH MỤC MẶC ĐỊNH!";
+            $data = $this->_model->getOne($_GET['id']);
             $this->_renderBase->renderHeader();
             $this->load->render('layouts/categories/delete', $data);
             $this->_renderBase->renderFooter();

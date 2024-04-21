@@ -1,6 +1,6 @@
-<?php if (!empty($data['err'])) : ?>
+<?php if (!empty($data)) : ?>
     <div class="text-center mt-5">
-        <h4 class="text-danger"><?= $data['err'] ?? "" ?></h4>
+        <h4 class="text-danger">Không thể xóa danh mục <?= $data['name'] ?? "" ?></h4>
         <a href="?url=CategoryController/index" class="btn btn-warning">Quay về danh sách danh mục</a>
     </div>
 <?php else : ?>

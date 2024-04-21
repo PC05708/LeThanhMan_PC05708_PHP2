@@ -99,7 +99,7 @@ class AuthController extends BaseController
             $data['content'] = $this->_model->getUserByEmail($email);
             $data['err'] = [];
             if (empty($data['content'])) {
-                $data['err'] = "Email không tồn tại! hoặc mật khẩu chưa đúng!";
+                $data['err'] = "Email không tồn tại!";
             } else {
                 $_SESSION['OTP']['mail'] = $email;
                 header('Location: /?url=AuthController/confirmOTP');

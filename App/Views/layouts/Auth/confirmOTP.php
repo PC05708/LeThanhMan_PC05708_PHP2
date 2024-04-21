@@ -8,7 +8,7 @@
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Mật khẩu mới: </label>
-            <input type="pass" name="pass" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input type="password" name="pass" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
         </div>
         <button type="submit" name="sendOTP" class="btn btn-warning form-control">Gửi mã OTP</button>
         <div class="text-danger mb-2"><span id="time"><?= $data['time'] ?? '' ?></span></div>

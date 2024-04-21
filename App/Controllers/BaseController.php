@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Core\Render;
@@ -8,13 +9,13 @@ use App\Core\Render;
  * Tên Controller bắt đầu bằng danh từ, số ít, hậu tố Controller, Class phải trùng với tên file
  */
 
-class BaseController{  
+class BaseController
+{
     protected Render|array $load;
     function __construct()
     {
         $this->load = new Render();
     }
-
     public function  redirect($url, $refresh = null): void
     {
         header('location:' . $url);

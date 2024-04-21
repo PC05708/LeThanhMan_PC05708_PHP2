@@ -79,7 +79,6 @@ class UserController extends BaseController
             }
         }
         $this->_renderBase->renderHeader();
-        // $this->load->render('layouts/client/slider');
         $this->load->render('layouts/user/create', $data);
         $this->_renderBase->renderFooter();
     }
@@ -101,6 +100,7 @@ class UserController extends BaseController
             $name = $_POST['name'];
             $email = $_POST['email'];
             $pass = $_POST['pass'];
+            $pass = password_hash($pass, PASSWORD_DEFAULT);
             $data = [
                 "name" => $name,
                 "email" => $email,
@@ -111,7 +111,6 @@ class UserController extends BaseController
             exit();
         }
         $this->_renderBase->renderHeader();
-        // $this->load->render('layouts/client/slider');
         $this->load->render('layouts/user/update', $data);
         $this->_renderBase->renderFooter();
     }
